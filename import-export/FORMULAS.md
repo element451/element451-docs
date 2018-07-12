@@ -571,6 +571,61 @@ INPUT: CHECKBOX_CHECKED("[{'checked':false,'text':'Asian'},{'checked':false,'tex
 OUTPUT: ""
 ```
 
+## TAXONOMY_MAP
+
+Math function to fetch taxonomy.
+
+Usage example:
+
+```
+Name of the function: TAXONOMY_MAP
+Number of parameters: 4
+Type of parameters: input, match, output, default
+
+INPUT: TAXONOMY_MAP("cnr.taxonomy.18", "guid", "value", "MISSING")
+OUTPUT: "grad-admit"
+
+INPUT: TAXONOMY_MAP("cnr.taxonomy.18", "guid", "name", "MISSING")
+OUTPUT: "Grad Admits" 
+
+INPUT: TAXONOMY_MAP("", "guid", "name", "MISSING")
+OUTPUT: "MISSING" 
+
+INPUT: TAXONOMY_MAP("grad-admit", "value", "name", "MISSING")
+OUTPUT: "Grad Admits"
+
+INPUT: TAXONOMY_MAP("grad-admit", "value", "guid", "MISSING")
+OUTPUT: "cnr.taxonomy.6"
+```
+
+## SC_MAP_IMPORT
+
+Math function used to import taxonomies to user. Use with `[user-sources-source-code]` and `[user-sources-source-code-segment]` user fields. This function is an alias for `TAXONOMY_MAP` default of match and output as value/guid.
+
+```
+Name of the function: SC_MAP_IMPORT
+Number of parameters: 2
+Type of parameters: input, default
+
+INPUT: SC_MAP_IMPORT([c42]) - where c42 is the 42th imported column
+ALIAS FOR: TAXONOMY_MAP([c42], "value", "guid", "MISSING")
+OUTPUT: "tu.taxonomy.1"
+```
+
+## SC_MAP_EXPORT
+
+Math function used to export taxonomies from user. Use with `[user-sources-source-code]` and `[user-sources-source-code-segment]` user fields. This function is an alias for `TAXONOMY_MAP` default of match and output as guid/value.
+
+```
+Name of the function: SC_MAP_EXPORT
+Number of parameters: 2
+Type of parameters: input, default
+
+INPUT: SC_MAP_EXPORT([user-custom-source])
+ALIAS FOR: TAXONOMY_MAP([user-custom-source], "guid", "value", "MISSING")
+OUTPUT: "grad-admit"
+```
+
 # Date Functions 
 
 ## DATE_ADD

@@ -7,7 +7,7 @@ The following variables use a "left-join" from element_user + element_applicatio
 * [Engagement Score](#engagement-score)
 * [Seed Filters](#seed-filter)
 * [EPS Territories](#eps-territories)
-* [Channel Selection from Lockers] (#channel-selection)
+* [Channel Selection from Lockers] (#channel-selection-from-lockers)
 
 
 

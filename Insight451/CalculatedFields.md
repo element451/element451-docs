@@ -7,7 +7,7 @@ The following variables use a "left-join" from element_user + element_applicatio
 * [Engagement Score](#engagement-score)
 * [Seed Filters](#seed-filter)
 * [EPS Territories](#eps-territories)
-* [Channel Selection from Lockers](#Channel-Selection-from-Lockers)
+* [Channel Selection from Lockers](#channel-selection)
 
 
 
@@ -499,7 +499,7 @@ ELSEIF [Address Home Eps Code] = "WY 2" THEN "Western Wyoming"
 END
 ```
 
-# Channel Selection from Lockers
+# Channel Selection
 ```
 if [Source]="ecomm" then "Ecomm"
 elseif [Source]="newsletter" then "Ecomm"

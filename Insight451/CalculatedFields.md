@@ -7,6 +7,8 @@ The following variables use a "left-join" from element_user + element_applicatio
 * [Engagement Score](#engagement-score)
 * [Seed Filters](#seed-filter)
 * [EPS Territories](#eps-territories)
+* [Channel Selection from Lockers] (#channel-selection)
+
 
 
 # Funnel Stage 
@@ -495,4 +497,14 @@ ELSEIF [Address Home Eps Code] = "WY 0" THEN "Wyoming - Miscellaneous"
 ELSEIF [Address Home Eps Code] = "WY 1" THEN "Casper & Cheyenne"
 ELSEIF [Address Home Eps Code] = "WY 2" THEN "Western Wyoming"
 END
+```
+
+# Channel Selection from Lockers
+```
+if [Source]="ecomm" then "Ecomm"
+elseif [Source]="newsletter" then "Ecomm"
+elseif [Usage] > 0 and (not isnull ([Source])) and  [Source] != "Null" Then [Source] 
+elseif [Usage] > 0 and (isnull ([Source]))  Then "Ecomm"
+ELSEIF  [Web Source Utm Medium] = "email" or [Web Source Utm Medium] = "ecomm" Then "Ecomm"
+elseif [Web Source Utm Medium] = "Print" then "Print" else "Web/Other" END
 ```

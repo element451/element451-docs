@@ -600,14 +600,14 @@ OUTPUT: "cnr.taxonomy.6"
 
 ## SC_MAP_IMPORT
 
-Math function used to import taxonomies to user. Use with `[user-sources-source-code]` and `[user-sources-source-code-segment]` user fields. This function is an alias for `TAXONOMY_MAP` default of match and output as value/guid.
+Math function used to import taxonomies to user. Use with `[user-sources-source-code]` and `[user-sources-source-code-segment]` user fields. This function is an alias for `TAXONOMY_MAP` default of match and output as value/guid. Note: You can use the missing value to figure out what can not be found, eg. `SC_MAP_IMPORT([C1], CONCAT("Cant find mapping for: ",[C1]) )`
 
 ```
 Name of the function: SC_MAP_IMPORT
 Number of parameters: 2
 Type of parameters: input, default
 
-INPUT: SC_MAP_IMPORT([c42]) - where c42 is the 42th imported column
+INPUT: SC_MAP_IMPORT([c42], "MISSING") - where c42 is the 42th imported column
 ALIAS FOR: TAXONOMY_MAP([c42], "value", "guid", "MISSING")
 OUTPUT: "tu.taxonomy.1"
 ```

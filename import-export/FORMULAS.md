@@ -598,6 +598,26 @@ INPUT: TAXONOMY_MAP("grad-admit", "value", "guid", "MISSING")
 OUTPUT: "cnr.taxonomy.6"
 ```
 
+
+## DB_MAP
+
+An universal db mapper method, supposed to be for mainly internal usage.
+Internally `TAXONOMY_MAP`, `SC_MAP_IMPORT`, `SC_MAP_EXPORT` are using this too.
+Note: The value is being searched as it was given; with trim (to remove leading and trailing whitespaces); and with all non-alphanumeric character replaced by `_`.
+
+Example:
+
+```
+Name of the function: DB_MAP
+Number of parameters: 5
+Type of parameters: type, input, match, output, default
+  type: term, major, or taxonomy. (may be expanded later)
+
+INPUT: DB_MAP("taxonomy","grad-admit", "value", "guid", "MISSING")
+OUTPUT: "cnr.taxonomy.6"
+
+```
+
 ## SC_MAP_IMPORT
 
 Math function used to import taxonomies to user. Use with `[user-sources-source-code]` and `[user-sources-source-code-segment]` user fields. This function is an alias for `TAXONOMY_MAP` default of match and output as value/guid. Note: You can use the missing value to figure out what can not be found, eg. `SC_MAP_IMPORT([C1], CONCAT("Cant find mapping for: ",[C1]) )`

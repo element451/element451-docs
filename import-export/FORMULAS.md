@@ -641,7 +641,7 @@ Name of the function: SC_MAP_EXPORT
 Number of parameters: 2
 Type of parameters: input, default
 
-INPUT: SC_MAP_EXPORT([user-custom-source])
+INPUT: SC_MAP_EXPORT([user-custom-source], "MISSING")
 ALIAS FOR: TAXONOMY_MAP([user-custom-source], "guid", "value", "MISSING")
 OUTPUT: "grad-admit"
 ```

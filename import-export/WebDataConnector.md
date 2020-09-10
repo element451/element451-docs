@@ -168,6 +168,7 @@ Status 200
 ## "feature" : The Feature token to Authenticate the requests.
 ## "per_page" : Number of rows you want to receive in response.
 ## "show_schema" : Prints the schema of the returned data. (Recommended to ask for it once)
+## "show_rows" : Prints the actual set of returned rows per page.
 ##################################################
 
 import requests
@@ -177,10 +178,11 @@ import time
 secure = True
 client = 'element'
 api = 'api.451.io'
-task_guid = 'element.tasks.451'
+task_guid = 'element.task.451'
 feature = '451451451451451'
 per_page = 100
 show_schema = True
+show_rows = True
 
 # Prepare API url.
 api_url = '{protocol}://{client}.{api}/v2/importExport/tasks/{task_guid}/wdc?feature={feature}&per_page={per_page}'.format(
@@ -189,6 +191,7 @@ api_url = '{protocol}://{client}.{api}/v2/importExport/tasks/{task_guid}/wdc?fea
 
 # [Step 1] Open the Connector.
 resp = requests.post(api_url)
+resp1 = resp
 if resp.status_code != 202:
     # This means something went wrong.
     raise Exception('Error opening Connector: {}'.format(resp.content))
@@ -203,25 +206,23 @@ print('The Connector is now Open with id: "{}"'.format(connector_id))
 print('#################################################################')
 
 # [Step 2] Read Connector Pages until the last one.
+total_page_time = 0
 slowest_page_time = 0
 total_records = 0
 loop_count = 1
 page_count = 1
 paged_api_url = '{}&embed[]={}'.format(api_url, 'schema' if show_schema else '')
 while True:
-    resp = requests.get(paged_api_url)
+    resp = requests.get(paged_api_url, timeout=10)
 
-    # Record the slowest page time.
-    if resp.elapsed.total_seconds() > slowest_page_time:
-        slowest_page_time = resp.elapsed.total_seconds();
-
-    if resp.status_code == 102:
+    if resp.status_code == 202:
         # Segment is still processing, wait and try again soon.
         if loop_count > 5:
             # Segment is taken too long to be ready.
             raise Exception('Error getting first Connector page: {}'.format(resp.content))
 
         print('Segment is still processing, waiting and retrying in few seconds.')
+        print('!!!')
         time.sleep(5)
         continue
     elif resp.status_code != 200:
@@ -237,12 +238,18 @@ while True:
         print('=============================================')
 
     if resp.json()['data']: 
-        print('Printing page #{} results:'.format(page_count))
+        print('Printing page #{} results. {} seconds:'.format(page_count, resp.elapsed.total_seconds()))
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        for row in resp.json()['data']:
-            print(row)
-            print('-------------------')
+        if show_rows:
+            for row in resp.json()['data']:
+                print(row)
+                print('-------------------')
     
+    # Record the slowest page time.
+    if resp.elapsed.total_seconds() > slowest_page_time:
+        slowest_page_time = resp.elapsed.total_seconds()
+
+    total_page_time += resp.elapsed.total_seconds()
     page_count += 1
     total_records += resp.json()['meta']['total_returned']
 
@@ -256,14 +263,16 @@ while True:
     )
 
     loop_count += 1
+    time.sleep(3)
 
 # [Step 3] Close the Connector since we finished reading the data.
 resp = requests.put(api_url)
 print('#################################################################')
-print('Total pages read: {}'.format(page_count))
+print('Total pages read: {}'.format(page_count - 1))
 print('Requested per page: {}'.format(per_page))
 print('Total rows read: {}'.format(total_records))
-print('Slowest page: {} seconds'.format(page_count))
+print('Total pages time: {} seconds'.format(total_page_time))
+print('Slowest page: {} seconds'.format(slowest_page_time))
 print('The Connector with id "{}" has been Closed.'.format(connector_id))
 print('#################################################################')
 

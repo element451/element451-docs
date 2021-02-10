@@ -142,7 +142,7 @@ Request body:
 ### Request example with template guid in request body
 ```
 Request:
-POST https://{{client}}.{{api}}/v2/importExport/templates/import
+POST https://{{client}}.{{api}}/v2/users/import
 
 URL parameters:
 {{client}}: Assigned client subdomain.
@@ -186,7 +186,7 @@ template = 'demo1.template.2729'
 authorization_header = 'Basic asdfasdfasdf='
 
 # Prepare API url.
-api_url = '{protocol}://{client}.{api}/v2/importExport/templates/import'.format(
+api_url = '{protocol}://{client}.{api}/v2/users/import'.format(
     protocol= 'http', client=client, api=api
 )
 

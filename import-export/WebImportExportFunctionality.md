@@ -39,16 +39,14 @@ Request body:
 }
 
 Expected Response:
-Status 200
+Status 201
 {
-    "httpCode":200,
-    "responseCode":2002,
-    "userMessage":"The resource specified in the request was created.",
     "data": {
         "stats": {
             "created":2,
             "updated":0
         },
+        "error": null,
         "result": {
             "created":["601d53cd71dfb37bd02fa3a8","601d53cd71dfb37bd02fa3a9"]
         }
@@ -102,9 +100,6 @@ HTTP_Feature: Feature token for that client
 Expected Response:
 Status 200
 {
-    "httpCode":200,
-    "responseCode":2002,
-    "userMessage":"The resource specified in the request was created.",
     "data": [
         {
             "Email address": "john.smith@example.com",

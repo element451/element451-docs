@@ -16,7 +16,7 @@ URL parameters:
 {{api}}: URL of the Element451 API. "api.451.io" for Production API.
 
 Request headers:
-HTTP_Feature: Feature token for that client
+Feature: Feature token for that client
 
 Request body:
 {
@@ -63,7 +63,7 @@ URL parameters:
 {{api}}: URL of the Element451 API. "api.451.io" for Production API.
 
 Request headers:
-HTTP_Feature: Feature token for that client
+Feature: Feature token for that client
 
 Request body:
 {
@@ -88,14 +88,14 @@ Request body:
 ### Request example for export
 ```
 Request:
-GET https://{{client}}.{{api}}/v2/users/export?template=demo1.template.2729&userIds[]=602659091eb7a67a33231e4c&userIds[]=6026590a1eb7a67a33231e4d
+GET https://{{client}}.{{api}}/v2/users/export?template=demo1.template.2729&users[]=602659091eb7a67a33231e4c&users[]=6026590a1eb7a67a33231e4d
 
 URL parameters:
 {{client}}: Assigned client subdomain.
 {{api}}: URL of the Element451 API. "api.451.io" for Production API.
 
 Request headers:
-HTTP_Feature: Feature token for that client
+Feature: Feature token for that client
 
 Expected Response:
 Status 200

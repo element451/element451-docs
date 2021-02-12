@@ -17,7 +17,6 @@ URL parameters:
 
 Request headers:
 HTTP_Feature: Feature token for that client
-HTTP_Authorization: Basic http authorization
 
 Request body:
 {
@@ -67,7 +66,6 @@ URL parameters:
 
 Request headers:
 HTTP_Feature: Feature token for that client
-HTTP_Authorization: Basic http authorization
 
 Request body:
 {
@@ -100,7 +98,6 @@ URL parameters:
 
 Request headers:
 HTTP_Feature: Feature token for that client
-HTTP_Authorization: Basic http authorization
 
 Expected Response:
 Status 200
@@ -133,7 +130,6 @@ client = 'tu'
 api = 'local.my451.com:8080'
 feature = '451451451451451'
 template = 'demo1.template.2729'
-authorization_header = 'Basic asdfasdfasdf='
 
 # Prepare API url.
 api_url = '{protocol}://{client}.{api}/v2/users/import'.format(
@@ -160,7 +156,6 @@ request_body = {
 }
 request_headers = {
     'Feature': feature,
-    'Authorization': authorization_header,
     'Content-Type': 'application/json'
 }
 resp = requests.post(api_url, data=json.dumps(request_body), headers=request_headers)

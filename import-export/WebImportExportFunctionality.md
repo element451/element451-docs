@@ -5,66 +5,15 @@ Web import/export data route allows you to import/export data to the Element451 
 
 ### Preparations
 In order for this api to be used we need to have a template created. Template can be created in data section of Element451 dashboard.
-This is the example of template used for import request example bellow:
-```
-{
-   "type":"Data_import_task",
-   "name":"[IE] Insert from Route demo",
-   "columns":[
-      {
-         "field":"Email - Email address",
-         "mode":"slug",
-         "slug":"user-email-address",
-         "formula":"",
-         "transformations":[],
-         "scope":[],
-         "validations":[],
-         "type":"string",
-         "range":[
-            "unique"
-         ]
-      },
-      {
-         "field":"First Name",
-         "mode":"slug",
-         "slug":"user-first-name",
-         "formula":"",
-         "transformations":[],
-         "scope":[],
-         "validations":[],
-         "type":"string",
-         "range":[]
-      },
-      {
-         "field":"Last Name",
-         "mode":"slug",
-         "slug":"user-last-name",
-         "formula":"",
-         "transformations":[],
-         "scope":[],
-         "validations":[],
-         "type":"string",
-         "range":[]
-      }
-   ],
-   "_subdom":"demo1",
-   "guid":"demo1.template.2729",
-   "updated_at": "",
-   "created_at": "",
-   "output_settings": {
-      "import_mode":"upsert"
-   }
-}
-```
+
 ### Request example (for template demo1.template.2729)
 ```
 Request:
-POST https://{{client}}.{{api}}/v2/importExport/templates/{{templateGuid}}
+POST https://{{client}}.{{api}}/v2/users/import
 
 URL parameters:
 {{client}}: Assigned client subdomain.
 {{api}}: URL of the Element451 API. "api.451.io" for Production API.
-{{templateGuid}}: Guid of the template you want to import to be based on.
 
 Request headers:
 HTTP_Feature: Feature token for that client
@@ -74,6 +23,7 @@ Request body:
 {
     "item": {
         "source": "custom",
+        "template": "demo1.template.2729",
         "items": [
             {
                 "0": "john.smith@example.com",
@@ -84,7 +34,7 @@ Request body:
                 "0": "jane.jenkins@example.com",
                 "1": "Jane",
                 "2": "Jenkins"
-            },
+            }
         ]
     }
 }
@@ -109,39 +59,6 @@ Status 200
 ### Request example with named keys
 ```
 Request:
-POST https://{{client}}.{{api}}/v2/importExport/templates/{{templateGuid}}
-
-URL parameters:
-{{client}}: Assigned client subdomain.
-{{api}}: URL of the Element451 API. "api.451.io" for Production API.
-{{templateGuid}}: Guid of the template you want to import to be based on.
-
-Request headers:
-HTTP_Feature: Feature token for that client
-HTTP_Authorization: Basic http authorization
-
-Request body:
-{
-    "item": {
-        "source": "custom",
-        "items": [
-            {
-                "user-email-address": "john.smith@example.com",
-                "user-first-name": "John",
-                "user-last-name": "Smith"
-            },
-            {
-                "user-last-name": "Jenkins",
-                "user-emai-address": "jane.jenkins@example.com",
-                "user-first-name": "Jane"
-            },
-        ]
-    }
-}
-```
-### Request example with template guid in request body
-```
-Request:
 POST https://{{client}}.{{api}}/v2/users/import
 
 URL parameters:
@@ -156,7 +73,7 @@ Request body:
 {
     "item": {
         "source": "custom",
-        "template": "demo1.template.2729",
+        "template": "demo1.template.2729"
         "items": [
             {
                 "user-email-address": "john.smith@example.com",
@@ -175,7 +92,7 @@ Request body:
 ### Request example for export
 ```
 Request:
-POST https://{{client}}.{{api}}/v2/users/import
+GET https://{{client}}.{{api}}/v2/users/export?template=demo1.template.2729&userIds[]=602659091eb7a67a33231e4c&userIds[]=6026590a1eb7a67a33231e4d
 
 URL parameters:
 {{client}}: Assigned client subdomain.
@@ -184,13 +101,6 @@ URL parameters:
 Request headers:
 HTTP_Feature: Feature token for that client
 HTTP_Authorization: Basic http authorization
-
-Request body:
-{
-    "item": {
-        "template": "demo1.template.2729"
-    }
-}
 
 Expected Response:
 Status 200
@@ -202,6 +112,11 @@ Status 200
         {
             "Email address": "john.smith@example.com",
             "First name": "John",
+            "Last name": "Smith"
+        },
+        {
+            "Email address": "jane.smith@example.com",
+            "First name": "Jane",
             "Last name": "Smith"
         }
     ]

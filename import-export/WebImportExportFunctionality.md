@@ -1,12 +1,13 @@
-# [IE] Web Import functionality
+# [IE] Web Import/Export API
 
 ### Intro
-Web import/export data route allows you to import/export data to the Element451 system.
+This API allows you to import/export data to the Element451 system.
 
 ### Preparations
-In order for this api to be used we need to have a template created. Template can be created in data section of Element451 dashboard.
+In order for Element451 to recognize and transform your data, you must provide a template. Templates are created in "Data" section of the Element451 dashboard.
 
-### Request example (for template demo1.template.2729)
+## Import
+### Request example (using template demo1.template.2729)
 ```
 Request:
 POST https://{{client}}.{{api}}/v2/users/import
@@ -78,13 +79,14 @@ Request body:
             },
             {
                 "user-last-name": "Jenkins",
-                "user-emai-address": "jane.jenkins@example.com",
+                "user-email-address": "jane.jenkins@example.com",
                 "user-first-name": "Jane"
             },
         ]
     }
 }
 ```
+## Export
 ### Request example for export
 ```
 Request:
@@ -93,6 +95,10 @@ GET https://{{client}}.{{api}}/v2/users/export?template=demo1.template.2729&user
 URL parameters:
 {{client}}: Assigned client subdomain.
 {{api}}: URL of the Element451 API. "api.451.io" for Production API.
+
+Query parameters:
+template: ID of Element451 data template
+users: array of Element451 user IDs
 
 Request headers:
 Feature: Feature token for that client

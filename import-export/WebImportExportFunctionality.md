@@ -70,7 +70,7 @@ Request body:
 {
     "item": {
         "source": "custom",
-        "template": "demo1.template.2729"
+        "template": "demo1.template.2729",
         "items": [
             {
                 "user-email-address": "john.smith@example.com",

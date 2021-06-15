@@ -81,7 +81,7 @@ Request body:
                 "user-last-name": "Jenkins",
                 "user-email-address": "jane.jenkins@example.com",
                 "user-first-name": "Jane"
-            },
+            }
         ]
     }
 }

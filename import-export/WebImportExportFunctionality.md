@@ -18,6 +18,7 @@ URL parameters:
 
 Request headers:
 Feature: Feature token for that client
+Content-Type: 'application/json'
 
 Request body:
 {
@@ -65,6 +66,7 @@ URL parameters:
 
 Request headers:
 Feature: Feature token for that client
+Content-Type: 'application/json'
 
 Request body:
 {

@@ -92,3 +92,133 @@ Status 201
 | Spark Id | spark:id |
 | User Email | user:email_address |
 | User Id | user:id, element:id |
+
+
+## Export
+### Parameters
+- "notifications"
+In case you require an email notification after the export has finished.
+
+Example:
+
+```
+"notifications" : {
+    "email" : {
+        "active" : true, 
+        "to" : "docs@element451.com"
+    }
+}, 
+```      
+
+- "sources"
+Tells which files you are exporting.
+
+Example:
+
+```
+"sources" : [
+    {
+        "provider" : "Application", 
+        "path" : "/tu.applications.451/__preview", 
+        "name" : "[user:id]_applicationpreviewpdf", 
+        "source_name" : "Application", 
+        "have_cover" : false, 
+        "filter_model" : null, 
+        "filters" : [
+
+        ], 
+        "transformations" : [
+
+        ]
+    }
+], 
+```
+
+- "destination"
+The connector and path where the files will be exported.
+
+```
+"destination" : {
+        "type" : "sftp", 
+        "selected" : "sftp", 
+        "sftp" : {
+            "connector_guid" : "tu.connector.451", 
+            "path" : "fire/folder451"
+        }
+    }, 
+```
+
+- "output_settings"
+Details about file format and names of the exported files.
+
+```
+"output_settings" : {
+    "combine_pdf" : false, 
+    "combine_pdf_filename" : "", 
+    "output_one_folder_per_user" : false, 
+    "output_one_folder_per_user_filename" : "", 
+    "zip_everything" : false, 
+    "zip_everything_filename" : ""
+}, 
+```
+
+### Request example
+```
+Request:
+POST https://{{client}}.{{api}}/v2/users/documents/export
+
+URL parameters:
+{{client}}: Assigned client subdomain.
+{{api}}: URL of the Element451 API. "api.451.io" for Production API.
+
+Request headers:
+Feature: Feature token for that client
+Content-Type: 'application/json'
+
+Request body parameters:
+{
+    "notifications" : {
+        "email" : {
+            "active" : true, 
+            "to" : "ie@element451.com"
+        }
+    }, 
+    "sources" : [
+        {
+            "provider" : "Application", 
+            "path" : "/tu.applications.451/__preview", 
+            "name" : "[user:id]_applicationpreviewpdf", 
+            "source_name" : "Application", 
+            "have_cover" : false, 
+            "filter_model" : null, 
+            "filters" : [
+
+            ], 
+            "transformations" : [
+
+            ]
+        }
+    ], 
+    "destination" : {
+        "type" : "sftp", 
+        "selected" : "sftp", 
+        "sftp" : {
+            "connector_guid" : "tu.connector.451", 
+            "path" : "fire/folder451"
+        }
+    }, 
+    "output_settings" : {
+        "combine_pdf" : false, 
+        "combine_pdf_filename" : "", 
+        "output_one_folder_per_user" : false, 
+        "output_one_folder_per_user_filename" : "", 
+        "zip_everything" : false, 
+        "zip_everything_filename" : ""
+    }
+}
+
+Expected Response:
+Status 202
+{}
+```
+

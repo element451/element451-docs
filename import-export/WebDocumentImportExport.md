@@ -64,8 +64,6 @@ Status 201
                 "size": 20597,
                 "extension": "pdf",
                 "mime_type": "application/pdf",
-                "public_url": "https://...",
-                "url": "https://...",
                 "created_at": "2021-12-13T18:38:14+00:00"
             }
         }

@@ -1,7 +1,7 @@
-# [IE] Web Document Import/Export API
+# [IE] Web Document Import API
 
 ### Intro
-This API allows you to import/export documents to the Element451 system.
+This API allows you to import documents to the Element451 system.
 
 ## Import
 ### Parameters
@@ -9,7 +9,7 @@ This API allows you to import/export documents to the Element451 system.
 The file content to be uploaded.
 
 - "match_key" => "[Matching Attrib Key](#matching-attribute-keys)"  
-The attribute used to match the user with given value.
+The attribute used to match the user with the given value.
 
 - "match_value" => "mixed"  
 The value to match the user by the given attribute key.
@@ -42,7 +42,7 @@ Content-Type: 'multipart/form-data'
 
 Request body parameters:
 >
-    "file" => File
+    "file" => <File>
     "match_key" => "user:email_address"
     "folder" => "tu.taxonomies.451"
     "tags[]" => "tu.taxonomies.452"
@@ -64,8 +64,6 @@ Status 201
                 "size": 20597,
                 "extension": "pdf",
                 "mime_type": "application/pdf",
-                "public_url": "https://...",
-                "url": "https://...",
                 "created_at": "2021-12-13T18:38:14+00:00"
             }
         }
@@ -94,3 +92,4 @@ Status 201
 | Spark Id | spark:id |
 | User Email | user:email_address |
 | User Id | user:id, element:id |
+

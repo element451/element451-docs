@@ -38,6 +38,71 @@ When using "slug" given none slug columns will not have a key.
   - "unwind.root" Any entity you want to use for unwinding user rows.
 If you are exporting repeaters using root mappings, don't use this option.
 
+### Request example (basic, using slugs as keys)
+```
+Request:
+POST https://{{client}}.{{api}}/v2/users/export
+
+URL parameters:
+{{client}}: Assigned client subdomain.
+{{api}}: URL of the Element451 API. "api.451.io" for Production API.
+
+Request headers:
+Feature: Feature token for that client
+Content-Type: 'application/json'
+
+Request body parameters:
+{
+    "item": {
+        "options" : {
+            "column_key" : "slug"
+        },
+        "template": {
+            "columns": [
+                {
+                    "field": "Email",
+                    "mode": "slug",
+                    "slug": "user-email-address"
+                },
+                {
+                    "field": "First Name",
+                    "mode": "slug",
+                    "slug": "user-first-name"
+                },
+                {
+                    "field": "Last Name",
+                    "mode": "slug",
+                    "slug": "user-last-name"
+                }
+            ]
+        },
+        "users": [
+            "576af6b42e402e8d4c8b4569",
+            "5e1cc41c0396032a6e3a06c8"
+        ]
+    }
+}
+
+Expected Response:
+Status 200
+{
+    "data": [
+        {
+            "user-elementid": "621561e2f7fa620d22575e33",
+            "user-email-address": "john.smith@example.com",
+            "user-first-name": "John",
+            "user-last-name": "Smith"
+        },
+        {
+            "user-elementid": "621561e6f7fa620d22575e35",
+            "user-email-address": "jane.jenkins@example.com",
+            "user-first-name": "Jane",
+            "user-last-name": "Jenkins"
+        }
+    ]
+}
+```
+
 ### Request example with unwinding applications
 ```
 Request:
@@ -76,6 +141,11 @@ Request body parameters:
                     "field": "Last Name",
                     "mode": "slug",
                     "slug": "user-last-name"
+                },
+                {
+                    "field": "App Registration Id",
+                    "mode": "slug",
+                    "slug": "user-applications-registration-id",
                 }
             ]
         },
@@ -94,13 +164,22 @@ Status 200
             "id": "621561e2f7fa620d22575e33",
             "Email": "john.smith@example.com",
             "First Name": "John",
-            "Last Name": "Smith"
+            "Last Name": "Smith",
+            "App Registration Id" : "AA11"
+        },
+        {
+            "id": "621561e2f7fa620d22575e33",
+            "Email": "john.smith@example.com",
+            "First Name": "John",
+            "Last Name": "Smith",
+            "App Registration Id" : "BB11"
         },
         {
             "id": "621561e6f7fa620d22575e35",
             "Email": "jane.jenkins@example.com",
             "First Name": "Jane",
-            "Last Name": "Jenkins"
+            "Last Name": "Jenkins",
+            "App Registration Id" : "ZZ99"
         }
     ]
 }

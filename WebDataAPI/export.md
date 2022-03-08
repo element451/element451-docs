@@ -20,7 +20,7 @@ or if there's an existing template on the system a guid can be passed.
     - "transformations"   
     Any transformation to be applied on the value.
     - "validations"   
-    Any valudation to be applied to the value.
+    Any validation to be applied to the value.
     - "empty"   
     Action to do when the value is empty.
 

@@ -4,41 +4,56 @@
 This API allows you to export data from Element451 system.
 
 ## Export
-### Parameters
-- "template" => "mixed"  
+### General Parameters
+- "template" => (optional) "mixed" default:user-elementid   
 The template can be passed inline in the request body itself
 or if there's an existing template on the system a guid can be passed.
 
-  - "columns" list of properties to be exported for each row.
+  - "columns" => (required) "array"   
+  list of properties to be exported for each row.
   
-    - "field" (required)   
+    - "field" => (required) "string"   
     Friendly name of the field to be exported.
-    - "mode" (required)   
+    - "mode" => (required) "string"   
     .
-    - "slug"   
+    - "slug" => (optional) "string"   
     Slug of the referenced Mapping.
-    - "transformations"   
+    - "transformations" => (optional) "array"   
     Any transformation to be applied on the value.
-    - "validations"   
+    - "validations" => (optional) "array"   
     Any validation to be applied to the value.
-    - "empty"   
+    - "empty" => (optional) "mixed"   
     Action to do when the value is empty.
 
-- "users"
-List of users to export.
-Limited to 50 users per request.
-
-- "options"
+- "options" => (optional) "object"   
 Configurable options for the export task.
 
-  - "column_key" (default: field) can also take the value of "slug"
+  - "column_key" (default:field) can also take the value of "slug"
 and it will affect the resulting json object keys for each row.
 When using "slug" given none slug columns will not have a key.
 
   - "unwind.root" Any entity you want to use for unwinding user rows.
 If you are exporting repeaters using root mappings, don't use this option.
 
-### Request example (basic, using slugs as keys)
+### User List Mode Parameters
+- "users" => (optional if using segment mode) "array"   
+List of users to export.
+Limited to 50 users per request.
+
+### Segment Mode Parameters
+- "segment" => (optional if using user list mode) "object"   
+The segment can be passed as a raw inline segment in the request body itself
+or if there's an existing segment on the system a guid can be passed.
+
+- "per_page" => (optional) "integer" default:50
+How many users information you want to retrieve for a single request.
+Cannot be more than the default value.
+
+- "last_id" => (optional) "string" default:null
+Is used to access next pages in the result set, for first page it must be NULL or not specified, on each page received you will get under “meta.next_last_id” the value you need to specify to pull the next page.
+You will find the last page when there are no rows in page content or “meta.next_last_id” value is empty in response.
+
+### Request example [user list] basic, using slugs as keys
 ```
 Request:
 POST https://{{client}}.{{api}}/v2/users/export
@@ -103,7 +118,7 @@ Status 200
 }
 ```
 
-### Request example with unwinding applications
+### Request example [user list] with unwinding applications
 ```
 Request:
 POST https://{{client}}.{{api}}/v2/users/export
@@ -185,7 +200,7 @@ Status 200
 }
 ```
 
-### Request example with root mappings
+### Request example [user list] with root mappings
 ```
 Request:
 POST https://{{client}}.{{api}}/v2/users/export
@@ -542,6 +557,45 @@ Status 200
             "user-sources-root": null
         }
     ]
+}
+```
+
+### Request example [segment] basic
+```
+Request:
+POST https://{{client}}.{{api}}/v2/users/export
+
+URL parameters:
+{{client}}: Assigned client subdomain.
+{{api}}: URL of the Element451 API. "api.451.io" for Production API.
+
+Request headers:
+Feature: Feature token for that client
+Content-Type: 'application/json'
+
+Request body parameters:
+{
+    "item": {
+        "segment": "element.segments.451",
+        "per_page" : 10,
+    }
+}
+
+Expected Response:
+Status 200
+{
+    "data": [
+        {
+            "id": "621561e2f7fa620d22575e33"
+        },
+        ...
+        {
+            "id": "621561e6f7fa620d22575e35"
+        }
+    ],
+    "meta" : {
+        "next_last_id": "621561e6f7fa620d22575e35"
+    }
 }
 ```
 

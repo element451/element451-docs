@@ -25,7 +25,7 @@ You will find the last page when there are no rows in page content or “meta.ne
 ### Request example (with existing segment)
 ```
 Request:
-POST https://{{client}}.{{api}}/v2/users/export/segment
+POST https://{{client}}.{{api}}/v2/users/export/search
 
 URL parameters:
 {{client}}: Assigned client subdomain.
@@ -69,7 +69,7 @@ Status 200
 ### Request example (with inline segment)
 ```
 Request:
-POST https://{{client}}.{{api}}/v2/users/export/segment
+POST https://{{client}}.{{api}}/v2/users/export/search
 
 URL parameters:
 {{client}}: Assigned client subdomain.

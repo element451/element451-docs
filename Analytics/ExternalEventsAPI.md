@@ -9,6 +9,11 @@ fail validation or processing those will not affect good events which will
 be registered.
 
 ### Available Event types:
+- ActivityCompleted
+- CourseCompleted
+- CourseEnrolled
+- CourseDropped
+- CourseUpdated
 - EmailSend
 - EmailOpen
 - EmailUnsubscribe
@@ -43,6 +48,23 @@ Request body parameters:
 {
     "events" : [
         {
+            "type": "ActivityCompleted",
+            "activity_type" : "tu.type.451",
+            "name": "PhoneCallLog",
+            "timestamp": 618395780,
+            "note": "Had call with student",
+            "user_id": "5702ec092e402e851a8b4567",
+            ...
+            "context" : "workflow",
+            "workflow_guid" : "tu.workflow.451"
+            ...
+            "context" : "profile",
+            "created_by" : "5702ec092e402e851a8b4567"
+            ...
+            "context" : "todo",
+            "todo_guid" : "tu.todo.451"
+        },
+        {
             "type": "EmailDelivered",
             "timestamp": 618395780,
             "source": "MailTronV2",
@@ -50,7 +72,7 @@ Request body parameters:
             "user_id": "5702ec092e402e851a8b4567"
         },
         {
-            "type": "...EmailOpen",
+            "type": "EmailOpen",
             "timestamp": 618935780,
             "source": "MailTron",
             "notes": "Open from Safari",

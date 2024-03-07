@@ -1,3 +1,8 @@
+
+## Deprecated. Please use the [Web Data Export](https://api.element451.com/#e85b8e65-6a1f-4cb9-ad10-3e755f2effcf) instead.
+
+
+
 # [IE] Web Data Connector (WDC)
 
 ### Intro
